@@ -6,7 +6,7 @@ use App\Models\User;
 use App\Http\Requests\UserRequest;
 use App\Http\Controllers\Controller;
 
-class UsersController extends Controller
+class UserController extends Controller
 {
     /**
      * Display a listing of the resource.

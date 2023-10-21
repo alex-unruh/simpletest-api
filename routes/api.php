@@ -2,7 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\UsersController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\ProductController;
 
 Route::post('/login', [AuthController::class, 'login'])->middleware('auth.basic');
 
@@ -13,7 +14,19 @@ Route::post('/login', [AuthController::class, 'login'])->middleware('auth.basic'
 
     // Users
     Route::prefix('users')->group(function () {
-        Route::controller(UsersController::class)->group(function () {
+        Route::controller(UserController::class)->group(function () {
+            Route::get('/', 'index');
+            Route::get('/{id}/show', 'show');
+            Route::get('/{user}/is-busy', 'isBusy');
+            Route::post('/store', 'store');
+            Route::post('/{id}/update', 'update');
+            Route::post('/{id}/delete', 'destroy');
+        })->middleware('can:manage-users');
+    });
+    
+    // Products
+    Route::prefix('products')->group(function () {
+        Route::controller(ProductController::class)->group(function () {
             Route::get('/', 'index');
             Route::get('/{id}/show', 'show');
             Route::get('/{user}/is-busy', 'isBusy');
